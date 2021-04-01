@@ -1,4 +1,5 @@
 cd /home/stock
+git -c credential.helper= -c core.quotepath=false -c log.showSignature=false fetch origin --recurse-submodules=no --progress --prune
 git pull
 mvn clean package -Dmaven.test.skip=true
 ps aux|grep java|grep jar|awk '{print $2}'|xargs kill
