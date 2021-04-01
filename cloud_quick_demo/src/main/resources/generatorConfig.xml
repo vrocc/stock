@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="application.properties"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="forceAnnotation" value="true"/>
+
+        <plugin type="com.roc.plugin.LombokPlugin">
+            <property name="mappers" value="com.roc.spring.crud.mapper.BaseMapper"/>
+            <property name="viewMapper" value="com.roc.spring.crud.mapper.BaseViewMapper"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="forceAnnotation" value="false"/>
+        </plugin>
+
+        <!-- JDBC连接 -->
+        <jdbcConnection
+                driverClass="${spring.datasource.driver-class-name}"
+                connectionURL="${spring.datasource.url}"
+                userId="${spring.datasource.username}"
+                password="${spring.datasource.password}">
+            <property name="useInformationSchema" value="true"/>
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.roc.financial.dao.model" targetProject="src/main/java">
+            <property name="rootClass" value="com.roc.spring.crud.model.BaseEntity"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+
+        <javaClientGenerator targetPackage="com.roc.financial.dao.mapper" targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="stock_query_log">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+    </context>
+</generatorConfiguration>
